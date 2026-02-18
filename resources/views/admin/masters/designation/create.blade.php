@@ -27,7 +27,7 @@
                             <form action="{{ route('admin.designation.store') }}" method="POST">
                                 @csrf
 
-                                @include('masters.designation.form')
+                                @include('admin.masters.designation.form')
 
                                 <div class="d-flex gap-2 mt-3">
                                     <button type="submit" class="btn btn-primary">Save</button>

@@ -14,7 +14,7 @@ class WorkStatusController extends Controller
     public function index()
     {
         $workStatuses = WorkStatus::latest()->get();
-        return view('masters.work_status.index', compact('workStatuses'));
+        return view('admin.masters.work_status.index', compact('workStatuses'));
     }
 
     public function create()

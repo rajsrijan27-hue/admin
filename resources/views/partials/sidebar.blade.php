@@ -157,6 +157,15 @@
                     </a>
                 </li>
 
+
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="javascript:void(0);" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-cast"></i></span>
+                        <span class="nxl-mtext">Configuration</span>
+                        <span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                    </a>
+                    <ul class="nxl-submenu">
+
                 {{-- Religion --}}
                 <li class="nxl-item">
                     <a href="{{ route('admin.religion.index') }}" class="nxl-link">
@@ -203,6 +212,8 @@
                         <span class="nxl-micon"><i class="feather-grid"></i></span>
                         <span class="nxl-mtext">Department</span>
                     </a>
+                </li>
+                    </ul>
                 </li>
 
                 {{-- Section: Account --}}

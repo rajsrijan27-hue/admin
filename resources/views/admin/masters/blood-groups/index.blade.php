@@ -52,18 +52,20 @@
                                                 <td class="text-end">
                                                     <div class="hstack gap-2 justify-content-end">
 
-                                                        <!-- Edit -->
-                                                        <a href="{{ route('admin.blood-groups.edit', $bg->id) }}"
-                                                            class="avatar-text avatar-md action-icon action-edit" title="Edit">
-                                                            <i class="feather-edit"></i>
-                                                        </a>
+                                                    <!-- Edit -->
+                                                    <a href="{{ route('admin.blood-groups.edit', $bg->id) }}"
+                                                    class="avatar-text avatar-md action-icon action-edit"
+                                                    title="Edit">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
 
-                                                        <!-- Delete -->
-                                                        <form action="{{ route('admin.blood-groups.destroy', $bg->id) }}"
-                                                            method="POST" class="d-inline"
-                                                            onsubmit="return confirm('Are you sure you want to delete this blood group?');">
-                                                            @csrf
-                                                            @method('DELETE')
+                                                    <!-- Delete -->
+                                                    <form action="{{ route('admin.blood-groups.destroy', $bg->id) }}"
+                                                        method="POST"
+                                                        class="d-inline"
+                                                        onsubmit="return confirm('Are you sure you want to delete this blood group?');">
+                                                        @csrf
+                                                        @method('DELETE')
 
                                                             <button type="submit"
                                                                 class="avatar-text avatar-md action-icon action-delete"
