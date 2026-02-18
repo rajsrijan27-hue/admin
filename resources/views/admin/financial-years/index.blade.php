@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Admin | Financial Years | ' . config('app.name'))
+@section('page-title', 'Financial Years | ' . config('app.name'))
 @section('title', 'Financial Years')
 
 @section('content')

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Institutions | ' . config('app.name'))
+
 @section('content')
 
 <div class="main-content">

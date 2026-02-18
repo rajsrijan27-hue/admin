@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Add Department | ' . config('app.name'))
+
 @section('content')
     <div class="nxl-content">
         <div class="page-header d-flex align-items-center justify-content-between mb-5">

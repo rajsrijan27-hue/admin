@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('hospital_financial_years', function (Blueprint $table) {
             $table->id();
 
-            // keep as plain string (UUID or code) for now, no FK yet
             $table->char('hospital_id', 36);
 
             $table->unsignedBigInteger('financial_year_id');
@@ -18,9 +17,14 @@ return new class extends Migration {
             $table->boolean('locked')->default(false);
             $table->timestamps();
 
-            // FK only to financial_years (this table exists)
             $table->foreign('financial_year_id')
-                ->references('id')->on('financial_years')
+                ->references('id')
+                ->on('financial_years')
+                ->onDelete('cascade');
+
+            $table->foreign('hospital_id')
+                ->references('id')
+                ->on('hospitals')
                 ->onDelete('cascade');
 
             $table->unique(['hospital_id', 'financial_year_id']);

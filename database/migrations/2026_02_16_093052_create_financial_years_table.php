@@ -9,11 +9,12 @@ return new class extends Migration {
     {
         Schema::create('financial_years', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();      // e.g. 2024-25
+            $table->string('code')->unique(); // e.g. 2024-25
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes(); // for soft delete tests
         });
     }
 
@@ -22,3 +23,4 @@ return new class extends Migration {
         Schema::dropIfExists('financial_years');
     }
 };
+

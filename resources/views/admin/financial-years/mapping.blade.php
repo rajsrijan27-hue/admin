@@ -57,7 +57,6 @@
                                 <th>Financial Year</th>
                                 <th>Dates</th>
                                 <th>Current</th>
-                                <th>Locked</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,32 +66,48 @@
                                 @endphp
                                 <tr>
                                     <td>
-                                        <input type="checkbox"
-                                               name="financial_year_ids[]"
-                                               value="{{ $fy->id }}"
-                                               {{ $pivot ? 'checked' : '' }}>
+                                        <div class="form-check form-switch mb-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="financial_year_ids[]"
+                                                value="{{ $fy->id }}"
+                                                id="fy-use-{{ $fy->id }}"
+                                                {{ $pivot ? 'checked' : '' }}
+                                            >
+                                            <label class="form-check-label small" for="fy-use-{{ $fy->id }}">
+                                                {{ $pivot ? 'Mapped' : 'Map' }}
+                                            </label>
+                                        </div>
                                     </td>
+
                                     <td>{{ $fy->code }}</td>
-                                    <td>
-                                        {{ $fy->start_date->format('d-m-Y') }}
-                                        –
+
+                                    <td class="text-muted">
+                                        {{ $fy->start_date->format('d-m-Y') }} –
                                         {{ $fy->end_date->format('d-m-Y') }}
                                     </td>
+
                                     <td>
-                                        <input type="radio"
-                                               name="current_year_id"
-                                               value="{{ $fy->id }}"
-                                               {{ $pivot && $pivot->is_current ? 'checked' : '' }}>
-                                    </td>
-                                    <td>
-                                        <input type="checkbox"
-                                               name="locked[{{ $fy->id }}]"
-                                               value="1"
-                                               {{ $pivot && $pivot->locked ? 'checked' : '' }}>
+                                        <div class="form-check mb-0 d-flex align-items-center gap-1">
+                                            <input
+                                                class="form-check-input"
+                                                type="radio"
+                                                name="current_year_id"
+                                                value="{{ $fy->id }}"
+                                                id="fy-current-{{ $fy->id }}"
+                                                {{ $pivot && $pivot->is_current ? 'checked' : '' }}
+                                                {{ ! $pivot ? 'disabled' : '' }}
+                                            >
+                                            <label class="form-check-label small" for="fy-current-{{ $fy->id }}">
+                                                {{ $pivot && $pivot->is_current ? 'Current' : 'Set' }}
+                                            </label>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
                 </div>
 
