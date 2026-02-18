@@ -24,7 +24,7 @@
                     <div class="card stretch stretch-full">
                         <div class="card-body">
 
-                            <form action="{{ route('work-status.store') }}" method="POST">
+                            <form action="{{ route('admin.work-status.store') }}" method="POST">
                                 @csrf
 
                                 @include('masters.work_status.form')
@@ -35,7 +35,7 @@
                                         Save
                                     </button>
 
-                                    <a href="{{ route('work-status.index') }}" class="btn btn-light">
+                                    <a href="{{ route('admin.work-status.index') }}" class="btn btn-light">
                                         Cancel
                                     </a>
                                 </div>

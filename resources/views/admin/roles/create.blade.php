@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Add Role')
-@section('title', 'Add Role')
+@section('page-title', 'Add Role | ' .config('app.name'))
+@section('title', 'Add Role | ' .config('app.name'))
 
 @section('content')
         <div class="page-header mb-4">

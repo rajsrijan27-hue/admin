@@ -50,12 +50,11 @@
                                         <td class="text-end">
                                             <div class="hstack gap-2 justify-content-end">
 
-                                                <a href="{{ route('religion.restore', $religion->id) }}"
+                                                <a href="{{ route('admin.religion.restore', $religion->id) }}"
                                                     class="avatar-text avatar-md action-icon action-restore">
                                                     <i class="feather-refresh-ccw"></i>
                                                 </a>
-
-                                                <a href="{{ route('religion.forceDelete', $religion->id) }}"
+                                                <a href="{{ route('admin.religion.forceDelete', $religion->id) }}"
                                                     class="avatar-text avatar-md action-icon action-delete"
                                                     onclick="return confirm('This will permanently delete the record. Continue?')">
                                                     <i class="feather-trash"></i>

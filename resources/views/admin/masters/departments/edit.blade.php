@@ -6,7 +6,7 @@
     <div class="page-header d-flex align-items-center justify-content-between mb-5">
         <h5 class="mb-0">Edit Department</h5>
         <div class="page-header-right">
-            <a href="{{ route('departments.index') }}" class="btn btn-light">Back</a>
+            <a href="{{ route('admin.departments.index') }}" class="btn btn-light">Back</a>
         </div>
     </div>
     
@@ -14,7 +14,7 @@
         <div class="col-12 col-md-10 col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('departments.update', $department->id) }}">
+                    <form method="POST" action="{{ route('admin.departments.update', $department->id) }}">
                         @csrf
                         @method('PUT')
 
@@ -22,7 +22,7 @@
 
                         <div class="d-flex gap-2">
                             <button class="btn btn-primary">Update</button>
-                            <a href="{{ route('departments.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ route('admin.departments.index') }}" class="btn btn-outline-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

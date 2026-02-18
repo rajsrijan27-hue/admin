@@ -34,10 +34,10 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $role = Roles::findOrFail($id);
-        if(!$role){
+        if (!$role) {
             return redirect()->back()->with('error', 'Role not found');
         }
-      
+
         $request->validate([
             'name' => 'sometimes|required',
             'description' => 'nullable|string',
@@ -51,8 +51,8 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = Roles::orderBy('name')->where('deleted_at', null)->latest()->paginate(10); 
-        if($roles->isEmpty()){
+        $roles = Roles::orderBy('name')->where('deleted_at', null)->latest()->paginate(10);
+        if ($roles->isEmpty()) {
             return response()->json(['message' => 'No roles found'], 404);
         }
         return view('admin.roles.index', compact('roles'));
@@ -61,40 +61,53 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $role = Roles::findOrFail($id);
-        if(!$role){
+        if (!$role) {
             return redirect()->back()->with('error', 'Role not found');
         }
         $role->delete();
         return redirect()->back()->with('success', 'Role deleted successfully');
     }
 
-    public function displayDeletedRoles(){
-        
+    public function displayDeletedRoles()
+    {
+
         $deletedRoles = Roles::withTrashed()->whereNotNull('deleted_at')->latest()->paginate(10);
-      
+
         return view('admin.roles.deleted')->with('roles', $deletedRoles);
     }
 
     public function restore($id)
     {
-       
+
         $role = Roles::withTrashed()->findOrFail($id);
-        if(!$role){
+        if (!$role) {
             return redirect()->back()->with('error', 'Role not found');
         }
         $role->restore();
 
         return redirect()->route('admin.roles.deleted')->with('success', 'Role restored successfully');
-    }   
+    }
 
-    public function forceDeleteRole($id){
-        
+    public function forceDeleteRole($id)
+    {
+
         $role = Roles::withTrashed()->findOrFail($id);
-        if(!$role){
+        if (!$role) {
             return redirect()->back()->with('error', 'Role not found');
         }
         $role->forceDelete();
 
         return redirect()->route('admin.roles.deleted')->with('success', 'Role permanently deleted successfully');
+    }
+
+    public function toggleStatus(Role $role)
+    {
+        $role->status = $role->status === 'active' ? 'inactive' : 'active';
+        $role->save();
+
+        return response()->json([
+            'success' => true,
+            'status' => $role->status,
+        ]);
     }
 }

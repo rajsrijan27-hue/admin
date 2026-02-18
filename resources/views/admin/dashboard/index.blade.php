@@ -1,7 +1,7 @@
 {{-- resources/views/admin/dashboard/index.blade.php --}}
 @extends('layouts.admin')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'Dashboard | ' .config('app.name'))
 @section('title', 'Dashboard')
 @push('styles')
     <style>

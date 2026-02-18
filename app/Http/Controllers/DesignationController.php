@@ -50,7 +50,7 @@ class DesignationController extends Controller
             'created_by' => 1
         ]);
 
-        return redirect()->route('designation.index')
+        return redirect()->route('admin.designation.index')
             ->with('success', 'Designation created successfully');
     }
 
@@ -105,7 +105,7 @@ class DesignationController extends Controller
 
 
 
-        return redirect()->route('designation.index')
+        return redirect()->route('admin.designation.index')
             ->with('success', 'Designation updated successfully');
     }
 
@@ -114,7 +114,7 @@ class DesignationController extends Controller
         $designation = Designation::findOrFail($id);
         $designation->delete();
 
-        return redirect()->route('designation.index')
+        return redirect()->route('admin.designation.index')
             ->with('success', 'Designation deleted successfully');
     }
 
@@ -133,7 +133,7 @@ class DesignationController extends Controller
     {
         Designation::withTrashed()->findOrFail($id)->restore();
 
-        return redirect()->route('designation.trash')
+        return redirect()->route('admin.designation.trash')
             ->with('success', 'Designation restored');
     }
 
@@ -141,7 +141,7 @@ class DesignationController extends Controller
     {
         Designation::withTrashed()->findOrFail($id)->forceDelete();
 
-        return redirect()->route('designation.trash')
+        return redirect()->route('admin.designation.trash')
             ->with('success', 'Designation removed permanently');
     }
 

@@ -49,7 +49,7 @@ class DepartmentController extends Controller
             'created_by' => auth()->id() ?? null,
         ]);
 
-        return redirect()->route('departments.index')->with('success', 'Department added.');
+        return redirect()->route('admin.departments.index')->with('success', 'Department added.');
     }
 
     public function edit(string $id)
@@ -89,7 +89,7 @@ class DepartmentController extends Controller
             'updated_by' => auth()->id() ?? null,
         ]);
 
-        return redirect()->route('departments.index')->with('success', 'Department updated.');
+        return redirect()->route('admin.departments.index')->with('success', 'Department updated.');
     }
 
     public function destroy(string $id)

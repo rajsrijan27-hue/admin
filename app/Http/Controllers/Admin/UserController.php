@@ -43,7 +43,8 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 
-    public function edit(User $user){
+    public function edit(User $user)
+    {
         $roles = Roles::where('status', 'active')->get();
         return view('admin.users.edit', compact('roles', 'user'));
     }
@@ -67,7 +68,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
         $user->delete();
@@ -75,10 +76,11 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
 
-    public function displayDeletedUser(){
-        
-        $users = User::withTrashed()->where(    'deleted_at', '!=', null)->latest()->paginate(10);
-       // if($deletedUsers->isEmpty()){
+    public function displayDeletedUser()
+    {
+
+        $users = User::withTrashed()->where('deleted_at', '!=', null)->latest()->paginate(10);
+        // if($deletedUsers->isEmpty()){
         //     return redirect()->back()->with('error', 'No deleted users found');
         // }   
         return view('admin.users.deleted', compact('users'));
@@ -87,7 +89,7 @@ class UserController extends Controller
     public function restore($id)
     {
         $user = User::withTrashed()->findOrFail($id);
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
         $user->restore();
@@ -98,12 +100,24 @@ class UserController extends Controller
     public function forceDeleteUser($id)
     {
         $user = User::withTrashed()->findOrFail($id);
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
         $user->forceDelete();
         return redirect()->route('admin.users.deleted')->with('success', 'User permanently deleted');
     }
+
+    public function toggleStatus(User $user)
+    {
+        $user->status = $user->status === 'active' ? 'inactive' : 'active';
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'status' => $user->status,
+        ]);
+    }
+
 }
 
 

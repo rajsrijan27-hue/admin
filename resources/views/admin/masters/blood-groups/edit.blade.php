@@ -13,7 +13,7 @@
         <div class="col-12 col-md-10 col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('blood-groups.update', $bloodGroup->id) }}">
+                    <form method="POST" action="{{ route('admin.blood-groups.update', $bloodGroup->id) }}">
                         @csrf
                         @method('PUT')
                         
@@ -21,7 +21,7 @@
                         
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('blood-groups.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ route('admin.blood-groups.index') }}" class="btn btn-outline-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

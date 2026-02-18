@@ -66,12 +66,12 @@
                                                 <td class="text-end">
     <div class="hstack gap-2 justify-content-end">
 
-        <a href="{{ route('religion.edit', $religion->id) }}"
+        <a href="{{ route('admin.religion.edit', $religion->id) }}"
            class="avatar-text avatar-md action-icon action-edit">
             <i class="feather-edit"></i>
         </a>
 
-        <form action="{{ route('religion.delete', $religion->id) }}"
+        <form action="{{ route('admin.religion.delete', $religion->id) }}"
                                                             method="POST" class="d-inline"
                                                             onsubmit="return confirm('Are you sure you want to delete this religion?');">
                                                             @csrf

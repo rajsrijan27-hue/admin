@@ -12,7 +12,7 @@
         </div>
 
         <div class="page-header-right ms-auto d-flex gap-2">
-            <a href="{{ route('job-type.index') }}" class="btn btn-neutral">
+            <a href="{{ route('admin.job-type.index') }}" class="btn btn-neutral">
                 Back
             </a>
         </div>
@@ -49,12 +49,12 @@
                                 <td class="text-end">
                                     <div class="hstack gap-2 justify-content-end">
 
-                                        <a href="{{ route('job-type.restore', $jobType->id) }}"
+                                        <a href="{{ route('admin.job-type.restore', $jobType->id) }}"
                                             class="avatar-text avatar-md action-icon action-restore">
                                             <i class="feather-refresh-ccw"></i>
                                         </a>
 
-                                        <a href="{{ route('job-type.forceDelete', $jobType->id) }}"
+                                        <a href="{{ route('admin.job-type.forceDelete', $jobType->id) }}"
                                             class="avatar-text avatar-md action-icon action-delete"
                                             onclick="return confirm('This will permanently delete the record. Continue?')">
                                             <i class="feather-trash"></i>

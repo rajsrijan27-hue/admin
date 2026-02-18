@@ -28,7 +28,7 @@ class InstitutionController extends Controller
 
         Institution::create($request->all());
 
-        return redirect()->route('institutions.index')
-                         ->with('success', 'Institution Created Successfully');
+        return redirect()->route('admin.institutions.index')
+                 ->with('success', 'Institution Created Successfully');
     }
 }

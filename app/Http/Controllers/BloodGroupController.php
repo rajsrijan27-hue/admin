@@ -14,14 +14,14 @@ class BloodGroupController extends Controller
 
     public function index()
     {
-        $bloodGroups = BloodGroup::orderBy('blood_group_name')->paginate(10);
-        return view('masters.blood-groups.index', compact('bloodGroups'));
+        $bloodGroups = BloodGroup::orderBy('admin.blood_group_name')->paginate(10);
+        return view('admin.masters.blood-groups.index', compact('bloodGroups'));
     }
 
 
     public function create()
     {
-        return view('masters.blood-groups.create');
+        return view('admin.masters.blood-groups.create');
     }
 
 

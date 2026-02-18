@@ -12,14 +12,14 @@
                 </div>
                 <ul class="breadcrumb ms-3">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('organization.index') }}">Organization</a>
+                        <a href="{{ route('admin.organization.index') }}">Organization</a>
                     </li>
                     <li class="breadcrumb-item">List</li>
                 </ul>
             </div>
 
             <div class="page-header-right ms-auto">
-                <a href="{{ route('organization.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.organization.create') }}" class="btn btn-primary">
                     <i class="feather-plus me-2"></i> New Organization
                 </a>
             </div>
@@ -123,14 +123,14 @@
 
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li>
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('organization.edit',$org->id) }}">
+                                                                          <a class="dropdown-item"
+                                                                              href="{{ route('admin.organization.edit',$org->id) }}">
                                                             <i class="feather-edit me-2"></i> Edit
                                                         </a>
                                                     </li>
 
                                                     <li>
-                                                        <form action="{{ route('organization.destroy',$org->id) }}"
+                                                          <form action="{{ route('admin.organization.destroy',$org->id) }}"
                                                               method="POST">
                                                             @csrf
                                                             @method('DELETE')

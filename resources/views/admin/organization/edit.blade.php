@@ -4,7 +4,7 @@
 
 <h2>Edit Organization</h2>
 
-<form method="POST" action="{{ route('organization.update',$organization->id) }}">
+<form method="POST" action="{{ route('admin.organization.update',$organization->id) }}">
 @csrf
 @method('PUT')
 

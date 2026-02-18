@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{ route('work-status.update', $workStatus->id) }}" method="POST">
+                <form action="{{ route('admin.work-status.update', $workStatus->id) }}" method="POST">
                     @csrf
 
                     @include('masters.work_status.form')
@@ -19,7 +19,7 @@
                             Update
                         </button>
 
-                        <a href="{{ route('work-status.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.work-status.index') }}" class="btn btn-secondary">
                             Cancel
                         </a>
                     </div>

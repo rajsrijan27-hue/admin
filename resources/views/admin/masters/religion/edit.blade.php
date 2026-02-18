@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{ route('religion.update', $religion->id) }}" method="POST">
+                <form action="{{ route('admin.religion.update', $religion->id) }}" method="POST">
                     @csrf
 
                     @include('masters.religion.form')
@@ -19,7 +19,7 @@
                             Update
                         </button>
 
-                        <a href="{{ route('religion.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.religion.index') }}" class="btn btn-secondary">
                             Cancel
                         </a>
                     </div>

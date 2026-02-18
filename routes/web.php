@@ -24,20 +24,11 @@ use App\Http\Controllers\ModuleController;
 |--------------------------------------------------------------------------
 | Public (guest) routes
 |--------------------------------------------------------------------------
-| These routes are accessible without authentication.
-| Used for login, forgot MPIN, OTP, etc.
 */
 
-// Login page
 Route::view('/', 'auth.login')->name('login');
-
-// Forgot MPIN page
 Route::view('/forgot-mpin', 'auth.forgot-mpin')->name('forgot.mpin');
-
-// Set MPIN page
 Route::view('/set-mpin', 'auth.set-mpin')->name('set.mpin');
-
-// OTP page
 Route::view('/otp', 'auth.otp')->name('otp');
 
 /*
@@ -46,51 +37,26 @@ Route::view('/otp', 'auth.otp')->name('otp');
 |--------------------------------------------------------------------------
 */
 
-// Login with mobile + MPIN
-Route::post('/login', [SignInController::class, 'login'])
-    ->name('login.submit');
-
-// Forgot MPIN → send OTP
-Route::post('/send-otp', [SignInController::class, 'sendOtp'])
-    ->name('forgot.mpin.submit');
-
-// Resend OTP
-Route::post('/resend-otp', [SignInController::class, 'resendOtp'])
-    ->name('otp.resend');
-
-// Verify OTP
-Route::post('/verify-otp', [SignInController::class, 'verifyOtp'])
-    ->name('otp.verify');
-
-// Set new MPIN after OTP
-Route::post('/set-mpin', [SignInController::class, 'setMpin'])
-    ->name('mpin.store');
+Route::post('/login', [SignInController::class, 'login'])->name('login.submit');
+Route::post('/send-otp', [SignInController::class, 'sendOtp'])->name('forgot.mpin.submit');
+Route::post('/resend-otp', [SignInController::class, 'resendOtp'])->name('otp.resend');
+Route::post('/verify-otp', [SignInController::class, 'verifyOtp'])->name('otp.verify');
+Route::post('/set-mpin', [SignInController::class, 'setMpin'])->name('mpin.store');
 
 /*
 |--------------------------------------------------------------------------
 | Authenticated + Admin-only routes
 |--------------------------------------------------------------------------
-| These routes require:
-|  - user must be logged in  (auth middleware)
-|  - user must be admin      (admin middleware)
-|
-| Make sure in bootstrap/app.php you have:
-|
-| ->withMiddleware(function (Middleware $middleware) {
-|     $middleware->alias([
-|         'admin' => \App\Http\Middleware\AdminMiddleware::class,
-|     ]);
-| })
-|
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    // Logout
+    Route::post('/logout', [SignInController::class, 'logout'])->name('logout');
 
     /*
     |--------------------------------------------------------------------------
     | Admin prefix & name prefix
     |--------------------------------------------------------------------------
-    | All URLs will start with /admin
     */
 
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -100,36 +66,30 @@ Route::middleware(['auth', 'admin'])->group(function () {
         | Dashboard
         |----------------------------------------------------------------------
         */
-        Route::view('dashboard', 'admin.dashboard.index')
-            ->name('dashboard');
+
+        Route::view('dashboard', 'admin.dashboard.index')->name('dashboard');
 
         /*
         |----------------------------------------------------------------------
-        | Role & User Management
+        | Roles & Users
         |----------------------------------------------------------------------
         */
 
-        // Roles (except show)
+        // Roles CRUD (resource, except show)
         Route::resource('roles', RoleController::class)->except(['show']);
 
-        // Extra Role routes (soft delete, restore, force delete)
-        Route::get('roles/deleted', [RoleController::class, 'DisplayDeletedRoles'])
-            ->name('roles.deleted');
-        Route::put('roles/restore/{id}', [RoleController::class, 'restore'])
-            ->name('roles.restore');
-        Route::delete('roles/force-delete/{id}', [RoleController::class, 'forceDeleteRole'])
-            ->name('roles.forceDelete');
+        // Roles extra routes (deleted, restore, force delete)
+        Route::get('roles/deleted', [RoleController::class, 'displayDeletedRoles'])->name('roles.deleted');
+        Route::put('roles/{id}/restore', [RoleController::class, 'restore'])->name('roles.restore');
+        Route::delete('roles/{id}/force-delete', [RoleController::class, 'forceDeleteRole'])->name('roles.forceDelete');
 
-        // Users (except show)
+        // Users CRUD (resource, except show)
         Route::resource('users', UserController::class)->except(['show']);
 
-        // Extra User routes (soft delete, restore, force delete)
-        Route::get('users/deleted', [UserController::class, 'displayDeletedUser'])
-            ->name('users.deleted');
-        Route::put('users/restore/{id}', [UserController::class, 'restore'])
-            ->name('users.restore');
-        Route::delete('users/force-delete/{id}', [UserController::class, 'forceDeleteUser'])
-            ->name('users.forceDelete');
+        // Users extra routes (deleted, restore, force delete)
+        Route::get('users/deleted', [UserController::class, 'displayDeletedUser'])->name('users.deleted');
+        Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+        Route::delete('users/{id}/force-delete', [UserController::class, 'forceDeleteUser'])->name('users.forceDelete');
 
         /*
         |----------------------------------------------------------------------
@@ -137,15 +97,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         |----------------------------------------------------------------------
         */
 
-        // Financial years
-        Route::get('financial-years', [FinancialYearController::class, 'index'])
-            ->name('financial-years.index');
-        Route::get('financial-years/create', [FinancialYearController::class, 'create'])
-            ->name('financial-years.create');
-        Route::post('financial-years', [FinancialYearController::class, 'store'])
-            ->name('financial-years.store');
+        // Financial Years CRUD (resource, except show)
+        Route::resource('financial-years', FinancialYearController::class)->except(['show']);
 
-        // Financial year mapping
+        // Financial Year Mapping
         Route::get('financial-years/mapping', [FinancialYearMappingController::class, 'index'])
             ->name('financial-years.mapping');
         Route::post('financial-years/mapping', [FinancialYearMappingController::class, 'store'])
@@ -153,7 +108,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Religion Master
+        | Masters: Religion
         |----------------------------------------------------------------------
         */
 
@@ -172,7 +127,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Job Type Master
+        | Masters: Job Type
         |----------------------------------------------------------------------
         */
 
@@ -191,7 +146,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Work Status Master
+        | Masters: Work Status
         |----------------------------------------------------------------------
         */
 
@@ -210,7 +165,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Blood Group Master
+        | Masters: Blood Group (resource-style)
         |----------------------------------------------------------------------
         */
 
@@ -227,7 +182,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Designation Master
+        | Masters: Designation
         |----------------------------------------------------------------------
         */
 
@@ -246,7 +201,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         /*
         |----------------------------------------------------------------------
-        | Department Master
+        | Masters: Department
         |----------------------------------------------------------------------
         */
 
@@ -267,13 +222,26 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('organization', OrganizationController::class);
         Route::resource('institutions', InstitutionController::class);
         Route::resource('modules', ModuleController::class);
+
+        /*
+        |----------------------------------------------------------------------
+        | Toggle Status Routes
+        |----------------------------------------------------------------------
+        */
+
+        Route::patch(
+            'financial-years/{financial_year}/toggle-status',
+            [FinancialYearController::class, 'toggleStatus']
+        )->name('financial-years.toggle-status');
+
+        Route::patch(
+            'roles/{role}/toggle-status',
+            [RoleController::class, 'toggleStatus']
+        )->name('roles.toggle-status');
+
+        Route::patch(
+            'users/{user}/toggle-status',
+            [UserController::class, 'toggleStatus']
+        )->name('users.toggle-status');
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Logout (authenticated users)
-    |--------------------------------------------------------------------------
-    */
-
-    Route::post('/logout', [SignInController::class, 'logout'])->name('logout');
 });

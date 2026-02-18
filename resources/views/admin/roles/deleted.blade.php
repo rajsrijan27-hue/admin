@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('page-title', 'Deleted Roles')
+@section('page-title', 'Deleted Roles | ' .config('app.name'))
 @section('content')
 <div class="nxl-content">
 

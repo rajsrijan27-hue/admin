@@ -23,7 +23,7 @@
             <div class="col-lg-6 col-md-8">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('blood-groups.store') }}">
+                            <form method="POST" action="{{ route('admin.blood-groups.store') }}">
                             @csrf
 
                             @include('masters.blood-groups.form')
@@ -32,7 +32,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     Save
                                 </button>
-                                <a href="{{ route('blood-groups.index') }}" class="btn btn-light">
+                                <a href="{{ route('admin.blood-groups.index') }}" class="btn btn-light">
                                     Cancel
                                 </a>
                             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Edit Role')
+@section('page-title', 'Edit Role | ' .config('app.name'))
 @section('title', 'Edit Role')
 
 @section('content')

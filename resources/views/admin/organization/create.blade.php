@@ -12,7 +12,7 @@
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('organization.index') }}">Organization</a>
+                        <a href="{{ route('admin.organization.index') }}">Organization</a>
                     </li>
                     <li class="breadcrumb-item">Create</li>
                 </ul>
@@ -27,7 +27,7 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <form id="orgForm" method="POST" action="{{ route('organization.store') }}">
+            <form id="orgForm" method="POST" action="{{ route('admin.organization.store') }}">
                 @csrf
 
                 <div class="row">

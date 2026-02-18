@@ -74,12 +74,12 @@
                                                 <td class="text-end">
                                                     <div class="hstack gap-2 justify-content-end">
 
-                                                        <a href="{{ route('job-type.edit', $jobType->id) }}"
+                                                        <a href="{{ route('admin.job-type.edit', $jobType->id) }}"
                                                             class="avatar-text avatar-md action-icon action-edit">
                                                             <i class="feather-edit"></i>
                                                         </a>
 
-                                                        <form action="{{ route('job-type.delete', $jobType->id) }}"
+                                                        <form action="{{ route('admin.job-type.delete', $jobType->id) }}"
                                                             method="POST" class="d-inline"
                                                             onsubmit="return confirm('Are you sure you want to delete this job type?');">
                                                             @csrf

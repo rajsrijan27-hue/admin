@@ -24,7 +24,7 @@
                     <div class="card stretch stretch-full">
                         <div class="card-body">
 
-                            <form action="{{ route('designation.update', $designation->id) }}" method="POST">
+                            <form action="{{ route('admin.designation.update', $designation->id) }}" method="POST">
                                 @csrf
 
                                 @include('masters.designation.form')
@@ -34,7 +34,7 @@
                                         Update
                                     </button>
 
-                                    <a href="{{ route('designation.index') }}" class="btn btn-light">
+                                    <a href="{{ route('admin.designation.index') }}" class="btn btn-light">
                                         Cancel
                                     </a>
                                 </div>

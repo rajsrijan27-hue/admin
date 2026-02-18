@@ -8,7 +8,7 @@
                 <h5 class="mb-0">Deleted Blood Groups</h5>
             </div>
             <div class="page-header-right d-flex gap-2">
-                <a href="{{ route('blood-groups.index') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.blood-groups.index') }}" class="btn btn-neutral">
                     Back
                 </a>
             </div>
@@ -46,7 +46,7 @@
                                             <div class="hstack gap-2 justify-content-end">
                                                 
                                                 {{-- Restore --}}
-                                                <form action="{{ route('blood-groups.restore', $bg->id) }}"
+                                                <form action="{{ route('admin.blood-groups.restore', $bg->id) }}"
                                                     method="POST" class="m-0 p-0">
                                                     @csrf
                                                     @method('PUT')
@@ -58,7 +58,7 @@
 
                                                 {{-- Permanent Delete --}}
 
-                                                <form action="{{ route('blood-groups.forceDelete', $bg->id) }}"
+                                                <form action="{{ route('admin.blood-groups.forceDelete', $bg->id) }}"
                                                     method="POST" class="m-0 p-0"
                                                     onsubmit="return confirm('This will permanently delete the record. Continue?');">
                                                     @csrf

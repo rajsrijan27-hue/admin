@@ -85,7 +85,7 @@ class ReligionController extends Controller
         $religion = Religion::findOrFail($id);
         $religion->delete();
 
-        return redirect()->route('religion.index')
+        return redirect()->route('admin.religion.index')
             ->with('success', 'Religion deleted successfully');
     }
 
@@ -99,7 +99,7 @@ class ReligionController extends Controller
     public function restore($id)
     {
         Religion::withTrashed()->findOrFail($id)->restore();
-        return redirect()->route('religion.trash')->with('success', 'Religion restored');
+        return redirect()->route('admin.religion.trash')->with('success', 'Religion restored');
     }
 
     public function forceDelete($id)

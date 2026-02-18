@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{ route('job-type.update', $jobType->id) }}" method="POST">
+                <form action="{{ route('admin.job-type.update', $jobType->id) }}" method="POST">
                     @csrf
 
                     @include('masters.job_type.form')
@@ -19,7 +19,7 @@
                             Update
                         </button>
 
-                        <a href="{{ route('job-type.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.job-type.index') }}" class="btn btn-secondary">
                             Cancel
                         </a>
                     </div>

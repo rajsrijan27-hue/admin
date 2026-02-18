@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Add Financial Year | ' . config('app.name'))
+@section('page-title', 'Add Financial Year | ' .config('app.name'))
 @section('title', 'Add Financial Year')
 
 @section('content')
@@ -46,9 +46,9 @@
                     <div class="mb-3">
                         <label class="form-label">Code</label>
                         <input type="text" name="code"
-                               value="{{ old('code') }}"
-                               placeholder="2024-25"
-                               class="form-control @error('code') is-invalid @enderror">
+                                value="{{ old('code') }}"
+                                placeholder="2024-25"
+                                class="form-control @error('code') is-invalid @enderror">
                         @error('code')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -57,8 +57,8 @@
                     <div class="mb-3">
                         <label class="form-label">Start Date</label>
                         <input type="date" name="start_date"
-                               value="{{ old('start_date') }}"
-                               class="form-control @error('start_date') is-invalid @enderror">
+                                value="{{ old('start_date') }}"
+                                class="form-control @error('start_date') is-invalid @enderror">
                         @error('start_date')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -69,8 +69,8 @@
                     <div class="mb-3">
                         <label class="form-label">End Date</label>
                         <input type="date" name="end_date"
-                               value="{{ old('end_date') }}"
-                               class="form-control @error('end_date') is-invalid @enderror">
+                                value="{{ old('end_date') }}"
+                                class="form-control @error('end_date') is-invalid @enderror">
                         @error('end_date')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -80,11 +80,11 @@
                         <label class="form-label d-block">Status</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input"
-                                   type="checkbox"
-                                   id="is_active"
-                                   name="is_active"
-                                   value="1"
-                                   {{ old('is_active', true) ? 'checked' : '' }}>
+                                    type="checkbox"
+                                    id="is_active"
+                                    name="is_active"
+                                    value="1"
+                                    {{ old('is_active', true) ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_active">
                                 Active
                             </label>

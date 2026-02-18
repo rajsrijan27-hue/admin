@@ -80,7 +80,7 @@
                                                         <div class="hstack gap-2 justify-content-end">
 
                                                             <!-- View Icon -->
-                                                            <a href="{{ route('modules.index', $module->id) }}" 
+                                                            <a href="{{ route('admin.modules.index', $module->id) }}" 
                                                             class="avatar-text avatar-md"
                                                             data-bs-toggle="tooltip"
                                                             title="View">
@@ -88,7 +88,7 @@
                                                             </a>
 
                                                             <!-- Delete Icon -->
-                                                            <form action="{{ route('modules.destroy', $module->id) }}" 
+                                                            <form action="{{ route('admin.modules.destroy', $module->id) }}" 
                                                                 method="POST"
                                                                 onsubmit="return confirm('Are you sure?')">
 

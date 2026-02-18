@@ -1,12 +1,11 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Roles')
+@section('page-title', 'Admin | Roles | ' . config('app.name'))
 @section('title', 'Roles')
 
 @section('content')
     <div class="page-header mb-4">
         <div class="d-flex align-items-center w-100">
-            {{-- LEFT: title + breadcrumb --}}
             <div class="page-header-title">
                 <h5 class="m-b-10 mb-1">
                     <i class="feather-shield me-2"></i>Roles
@@ -19,7 +18,6 @@
                 </ul>
             </div>
 
-            {{-- RIGHT: Deleted/Active toggle + Add Role (no duplicate button) --}}
             <div class="ms-auto d-flex gap-2">
                 @if (request()->routeIs('admin.roles.deleted'))
                     <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary">
@@ -61,56 +59,65 @@
                         <tbody>
                             @foreach ($roles as $index => $role)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $roles->firstItem() ? $roles->firstItem() + $index : $index + 1 }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>{{ $role->description ?? '-' }}</td>
                                     <td>
-                                        @if($role->status=="active")
-                                            <span class="badge bg-success">Active</span>
-                                        @else
-                                            <span class="badge bg-secondary">Inactive</span>
-                                        @endif
+                                        <span id="role-status-badge-{{ $role->id }}">
+                                            @if($role->status === 'active')
+                                                <span class="badge bg-success">Active</span>
+                                            @else
+                                                <span class="badge bg-secondary">Inactive</span>
+                                            @endif
+                                        </span>
                                     </td>
                                     <td class="text-end">
-                                        <div class="d-flex justify-content-end gap-2">
+                                        <div class="d-flex justify-content-end gap-2 align-items-center">
                                             @if (request()->routeIs('admin.roles.deleted'))
                                                 {{-- Restore on deleted page --}}
                                                 <form action="{{ route('admin.roles.restore', $role->id) }}" method="POST"
-                                                    onsubmit="return confirm('Restore this role?')">
+                                                      onsubmit="return confirm('Restore this role?')">
                                                     @csrf
                                                     <button type="submit" class="btn btn-outline-success btn-icon rounded-circle"
-                                                        title="Restore">
+                                                            title="Restore">
                                                         <i class="feather-rotate-ccw"></i>
                                                     </button>
                                                 </form>
 
                                                 {{-- Force Delete --}}
                                                 <form action="{{ route('admin.roles.forceDelete', $role->id) }}" method="POST"
-                                                    onsubmit="return confirm('Permanently delete this role?')">
+                                                      onsubmit="return confirm('Permanently delete this role?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-outline-danger btn-icon rounded-circle"
-                                                        title="Delete Permanently">
+                                                            title="Delete Permanently">
                                                         <i class="feather-trash-2"></i>
                                                     </button>
                                                 </form>
                                             @else
                                                 {{-- Edit on active page --}}
                                                 <a href="{{ route('admin.roles.edit', $role->id) }}"
-                                                    class="btn btn-outline-primary btn-icon rounded-circle" title="Edit">
+                                                   class="btn btn-outline-primary btn-icon rounded-circle" title="Edit">
                                                     <i class="feather-edit-2"></i>
                                                 </a>
 
                                                 {{-- Soft Delete --}}
                                                 <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
-                                                    onsubmit="return confirm('Delete this role?')">
+                                                      onsubmit="return confirm('Delete this role?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-outline-danger btn-icon rounded-circle"
-                                                        title="Delete">
+                                                            title="Delete">
                                                         <i class="feather-trash-2"></i>
                                                     </button>
                                                 </form>
+
+                                                {{-- Status toggle (active page only) --}}
+                                                @include('partials.status-toggle', [
+                                                    'id'      => $role->id,
+                                                    'url'     => route('admin.roles.toggle-status', $role->id),
+                                                    'checked' => $role->status === 'active',
+                                                ])
                                             @endif
                                         </div>
                                     </td>
@@ -129,3 +136,71 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function bindRoleStatusToggles() {
+        const toggles = document.querySelectorAll('.status-toggle[data-url*="roles"]');
+
+        toggles.forEach(toggle => {
+            if (toggle.dataset.bound === '1') return;
+            toggle.dataset.bound = '1';
+
+            toggle.addEventListener('change', function () {
+                const url     = this.getAttribute('data-url');
+                const checked = this.checked;
+                const id      = this.getAttribute('data-id');
+
+                fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Failed to update status.');
+                        this.checked = !checked;
+                        return;
+                    }
+
+                    // Update status badge dynamically
+                    const badgeContainer = document.getElementById('role-status-badge-' + id);
+                    if (badgeContainer) {
+                        if (data.status === 'active' || data.is_active) {
+                            badgeContainer.innerHTML = '<span class="badge bg-success">Active</span>';
+                        } else {
+                            badgeContainer.innerHTML = '<span class="badge bg-secondary">Inactive</span>';
+                        }
+                    }
+
+                    // Optional: update label in the switch partial
+                    const label = this.closest('.form-check').querySelector('.status-toggle-label');
+                    if (label) {
+                        if (data.status === 'active' || data.is_active) {
+                            label.textContent = 'Active';
+                            label.classList.remove('text-muted');
+                            label.classList.add('text-success');
+                        } else {
+                            label.textContent = 'Inactive';
+                            label.classList.remove('text-success');
+                            label.classList.add('text-muted');
+                        }
+                    }
+                })
+                .catch(() => {
+                    alert('Failed to update status.');
+                    this.checked = !checked;
+                });
+            });
+        });
+    }
+
+    bindRoleStatusToggles();
+});
+</script>
+@endpush

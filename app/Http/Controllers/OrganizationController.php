@@ -23,7 +23,7 @@ class OrganizationController extends Controller
     public function store(Request $request)
     {
         Organization::create($request->all());
-        return redirect()->route('organization.index');
+        return redirect()->route('admin.organization.index');
     }
 
     public function edit($id)
@@ -37,12 +37,12 @@ class OrganizationController extends Controller
         $organization = Organization::findOrFail($id);
         $organization->update($request->all());
 
-        return redirect()->route('organization.index');
+        return redirect()->route('admin.organization.index');
     }
 
     public function destroy($id)
     {
         Organization::destroy($id);
-        return redirect()->route('organization.index');
+        return redirect()->route('admin.organization.index');
     }
 }

@@ -17,11 +17,11 @@
             </div>
 
             <div class="page-header-right ms-auto d-flex gap-2">
-                <a href="{{ route('work-status.trash') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.work-status.trash') }}" class="btn btn-neutral">
                     Deleted Records
                 </a>
 
-                <a href="{{ route('work-status.create') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.work-status.create') }}" class="btn btn-neutral">
                     Add Work Status
                 </a>
             </div>
@@ -74,12 +74,12 @@
                                                 <td class="text-end">
                                                     <div class="hstack gap-2 justify-content-end">
 
-                                                        <a href="{{ route('work-status.edit', $workStatus->id) }}"
+                                                        <a href="{{ route('admin.work-status.edit', $workStatus->id) }}"
                                                             class="avatar-text avatar-md action-icon action-edit">
                                                             <i class="feather-edit"></i>
                                                         </a>
 
-                                                        <form action="{{ route('work-status.delete', $workStatus->id) }}"
+                                                        <form action="{{ route('admin.work-status.delete', $workStatus->id) }}"
                                                             method="POST" class="d-inline"
                                                             onsubmit="return confirm('Are you sure you want to delete this work status?');">
                                                             @csrf

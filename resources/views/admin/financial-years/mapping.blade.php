@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Financial Year Mapping')
+@section('page-title', 'Financial Year Mapping | ' .config('app.name'))
 @section('title', 'Financial Year Mapping')
 
 @section('content')

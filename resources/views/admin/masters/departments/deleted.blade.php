@@ -47,7 +47,7 @@
                                         <div class="d-flex justify-content-end gap-2">
 
                                             {{-- Restore --}}
-                                            <form action="{{ route('departments.restore', $d->id) }}"
+                                                <form action="{{ route('admin.departments.restore', $d->id) }}"
                                                 method="POST" class="m-0 p-0">
                                                 @csrf
                                                 @method('PUT')
@@ -59,7 +59,7 @@
                                             </form>
 
                                             {{-- Permanent Delete --}}
-                                            <form action="{{ route('departments.forceDelete', $d->id) }}"
+                                                <form action="{{ route('admin.departments.forceDelete', $d->id) }}"
                                                 method="POST"
                                                 class="m-0 p-0"
                                                 onsubmit="return confirm('This will permanently delete the record. Continue?');">
