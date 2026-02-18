@@ -51,8 +51,10 @@
                     <select name="start_year" class="form-select" id="start_year">
                         <option value="" {{ request('start_year') === null ? 'selected' : '' }}>All</option>
                         @for ($year = date('Y'); $year >= 2020; $year--)
-                            <option value="{{ $year }}"
-                                {{ (string)request('start_year') === (string)$year ? 'selected' : '' }}>
+                            <option
+                                value="{{ $year }}"
+                                {{ (string) request('start_year') === (string) $year ? 'selected' : '' }}
+                            >
                                 {{ $year }}
                             </option>
                         @endfor
@@ -94,39 +96,37 @@
                                         <td>{{ $fy->start_date->format('d-m-Y') }}</td>
                                         <td>{{ $fy->end_date->format('d-m-Y') }}</td>
                                         <td>
-                                            <span id="fy-status-badge-{{ $fy->id }}">
-                                                @if ($fy->is_active)
-                                                    <span class="badge bg-success">Active</span>
-                                                @else
-                                                    <span class="badge bg-secondary">Inactive</span>
-                                                @endif
-                                            </span>
+                                            @include('partials.status-toggle', [
+                                                'id'      => $fy->id,
+                                                'url'     => route('admin.financial-years.toggle-status', $fy->id),
+                                                'checked' => $fy->is_active,
+                                            ])
                                         </td>
                                         <td class="text-end">
                                             <div class="d-flex justify-content-end gap-2 align-items-center">
-                                                <a href=""
-                                                   class="btn btn-outline-secondary btn-icon rounded-circle"
-                                                   title="Edit">
+                                                <a
+                                                    href="{{ route('admin.financial-years.edit', $fy->id) }}"
+                                                    class="btn btn-outline-secondary btn-icon rounded-circle"
+                                                    title="Edit"
+                                                >
                                                     <i class="feather-edit-2"></i>
                                                 </a>
 
-                                                <form action="{{ route('admin.financial-years.destroy', $fy->id) }}"
-                                                      method="POST"
-                                                      onsubmit="return confirm('Are you sure you want to delete this financial year?');">
+                                                <form
+                                                    action="{{ route('admin.financial-years.destroy', $fy->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this financial year?');"
+                                                >
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                            class="btn btn-outline-danger btn-icon rounded-circle"
-                                                            title="Delete">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-danger btn-icon rounded-circle"
+                                                        title="Delete"
+                                                    >
                                                         <i class="feather-trash-2"></i>
                                                     </button>
                                                 </form>
-
-                                                @include('partials.status-toggle', [
-                                                    'id'      => $fy->id,
-                                                    'url'     => route('admin.financial-years.toggle-status', $fy->id),
-                                                    'checked' => $fy->is_active,
-                                                ])
                                             </div>
                                         </td>
                                     </tr>
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function bindStatusToggles() {
-        const toggles = tableWrapper.querySelectorAll('.status-toggle');
+        const toggles = tableWrapper.querySelectorAll('.status-toggle-input');
 
         toggles.forEach(toggle => {
             if (toggle.dataset.bound === '1') return;
@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function () {
             toggle.addEventListener('change', function () {
                 const url     = this.getAttribute('data-url');
                 const checked = this.checked;
-                const id      = this.getAttribute('data-id');
 
                 fetch(url, {
                     method: 'PATCH',
@@ -235,14 +234,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         return;
                     }
 
-                    // Update status badge dynamically
-                    const badgeContainer = document.getElementById('fy-status-badge-' + id);
-                    if (badgeContainer) {
-                        if (data.is_active) {
-                            badgeContainer.innerHTML = '<span class="badge bg-success">Active</span>';
-                        } else {
-                            badgeContainer.innerHTML = '<span class="badge bg-secondary">Inactive</span>';
-                        }
+                    const textEl = this.nextElementSibling.querySelector('.status-toggle-text');
+                    if (textEl) {
+                        textEl.textContent = data.is_active ? 'Active' : 'Inactive';
                     }
                 })
                 .catch(() => {

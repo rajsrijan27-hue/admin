@@ -63,61 +63,73 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ optional($user->role)->name ?? '-' }}</td>
                                     <td>
-                                        <span id="user-status-badge-{{ $user->id }}">
-                                            @if($user->status === 'active')
-                                                <span class="badge bg-success">Active</span>
-                                            @else
-                                                <span class="badge bg-secondary">Inactive</span>
-                                            @endif
-                                        </span>
+                                        @include('partials.status-toggle', [
+                                            'id'      => $user->id,
+                                            'url'     => route('admin.users.toggle-status', $user->id),
+                                            'checked' => $user->status === 'active',
+                                        ])
                                     </td>
                                     <td class="text-end">
                                         <div class="d-flex justify-content-end gap-2 align-items-center">
                                             @if (request()->routeIs('admin.users.deleted'))
                                                 {{-- Restore (on deleted page) --}}
-                                                <form action="{{ route('admin.users.restore', $user->id) }}" method="POST"
-                                                      onsubmit="return confirm('Restore this user?')">
+                                                <form
+                                                    action="{{ route('admin.users.restore', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Restore this user?')"
+                                                >
                                                     @csrf
-                                                    <button type="submit" class="btn btn-outline-success btn-icon rounded-circle"
-                                                            title="Restore">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-success btn-icon rounded-circle"
+                                                        title="Restore"
+                                                    >
                                                         <i class="feather-rotate-ccw"></i>
                                                     </button>
                                                 </form>
 
                                                 {{-- Force Delete --}}
-                                                <form action="{{ route('admin.users.forceDelete', $user->id) }}" method="POST"
-                                                      onsubmit="return confirm('Permanently delete this user?')">
+                                                <form
+                                                    action="{{ route('admin.users.forceDelete', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Permanently delete this user?')"
+                                                >
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-icon rounded-circle"
-                                                            title="Delete Permanently">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-danger btn-icon rounded-circle"
+                                                        title="Delete Permanently"
+                                                    >
                                                         <i class="feather-trash-2"></i>
                                                     </button>
                                                 </form>
                                             @else
                                                 {{-- Edit (on active page) --}}
-                                                <a href="{{ route('admin.users.edit', $user->id) }}"
-                                                   class="btn btn-outline-secondary btn-icon rounded-circle" title="Edit">
+                                                <a
+                                                    href="{{ route('admin.users.edit', $user->id) }}"
+                                                    class="btn btn-outline-secondary btn-icon rounded-circle"
+                                                    title="Edit"
+                                                >
                                                     <i class="feather-edit-2"></i>
                                                 </a>
 
                                                 {{-- Soft Delete --}}
-                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                                      onsubmit="return confirm('Delete this user?')">
+                                                <form
+                                                    action="{{ route('admin.users.destroy', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Delete this user?')"
+                                                >
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-icon rounded-circle"
-                                                            title="Delete">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-danger btn-icon rounded-circle"
+                                                        title="Delete"
+                                                    >
                                                         <i class="feather-trash-2"></i>
                                                     </button>
                                                 </form>
-
-                                                {{-- Status toggle (only on active page) --}}
-                                                @include('partials.status-toggle', [
-                                                    'id'      => $user->id,
-                                                    'url'     => route('admin.users.toggle-status', $user->id),
-                                                    'checked' => $user->status === 'active',
-                                                ])
                                             @endif
                                         </div>
                                     </td>
@@ -141,7 +153,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     function bindUserStatusToggles() {
-        const toggles = document.querySelectorAll('.status-toggle[data-url*="users"]');
+        const toggles = document.querySelectorAll('.status-toggle-input[data-url*="users"]');
 
         toggles.forEach(toggle => {
             if (toggle.dataset.bound === '1') return;
@@ -150,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
             toggle.addEventListener('change', function () {
                 const url     = this.getAttribute('data-url');
                 const checked = this.checked;
-                const id      = this.getAttribute('data-id');
 
                 fetch(url, {
                     method: 'PATCH',
@@ -168,28 +179,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         return;
                     }
 
-                    // Update status badge dynamically
-                    const badgeContainer = document.getElementById('user-status-badge-' + id);
-                    if (badgeContainer) {
-                        if (data.status === 'active' || data.is_active) {
-                            badgeContainer.innerHTML = '<span class="badge bg-success">Active</span>';
-                        } else {
-                            badgeContainer.innerHTML = '<span class="badge bg-secondary">Inactive</span>';
-                        }
-                    }
-
-                    // Optional: update label next to switch if you used the “nice” version
-                    const label = this.closest('.form-check').querySelector('.status-toggle-label');
-                    if (label) {
-                        if (data.status === 'active' || data.is_active) {
-                            label.textContent = 'Active';
-                            label.classList.remove('text-muted');
-                            label.classList.add('text-success');
-                        } else {
-                            label.textContent = 'Inactive';
-                            label.classList.remove('text-success');
-                            label.classList.add('text-muted');
-                        }
+                    const textEl = this.nextElementSibling.querySelector('.status-toggle-text');
+                    if (textEl) {
+                        textEl.textContent = (data.status === 'active' || data.is_active)
+                            ? 'Active'
+                            : 'Inactive';
                     }
                 })
                 .catch(() => {
