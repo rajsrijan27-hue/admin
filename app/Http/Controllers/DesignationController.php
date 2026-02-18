@@ -18,7 +18,7 @@ class DesignationController extends Controller
             ->orderBy('designation_name')
             ->get();
 
-        return view('masters.designation.index', compact('designations'));
+        return view('admin.masters.designation.index', compact('designations'));
     }
 
 

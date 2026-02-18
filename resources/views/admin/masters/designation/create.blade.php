@@ -24,15 +24,15 @@
                     <div class="card stretch stretch-full">
                         <div class="card-body">
 
-                            <form action="{{ route('designation.store') }}" method="POST">
+                            <form action="{{ route('admin.designation.store') }}" method="POST">
                                 @csrf
 
-                                @include('masters.designation.form')
+                                @include('admin.masters.designation.form')
 
                                 <div class="d-flex gap-2 mt-3">
                                     <button type="submit" class="btn btn-primary">Save</button>
 
-                                    <a href="{{ route('designation.index') }}" class="btn btn-light">
+                                    <a href="{{ route('admin.designation.index') }}" class="btn btn-light">
                                         Cancel
                                     </a>
                                 </div>

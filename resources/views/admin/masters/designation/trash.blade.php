@@ -12,7 +12,7 @@
             </div>
 
             <div class="page-header-right ms-auto d-flex gap-2">
-                <a href="{{ route('designation.index') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.designation.index') }}" class="btn btn-neutral">
                     Back
                 </a>
             </div>
@@ -54,12 +54,12 @@
                                         <td class="text-end">
                                             <div class="hstack gap-2 justify-content-end">
 
-                                                <a href="{{ route('designation.restore', $designation->id) }}"
+                                                <a href="{{ route('admin.designation.restore', $designation->id) }}"
                                                     class="avatar-text avatar-md action-icon action-restore">
                                                     <i class="feather-refresh-ccw"></i>
                                                 </a>
 
-                                                <a href="{{ route('designation.forceDelete', $designation->id) }}"
+                                                <a href="{{ route('admin.designation.forceDelete', $designation->id) }}"
                                                     class="avatar-text avatar-md action-icon action-delete"
                                                     onclick="return confirm('This will permanently delete the record. Continue?')">
                                                     <i class="feather-trash"></i>

@@ -15,7 +15,7 @@ class BloodGroupController extends Controller
     public function index()
     {
         $bloodGroups = BloodGroup::orderBy('blood_group_name')->paginate(10);
-        return view('masters.blood-groups.index', compact('bloodGroups'));
+        return view('admin.masters.blood-groups.index', compact('bloodGroups'));
     }
 
 

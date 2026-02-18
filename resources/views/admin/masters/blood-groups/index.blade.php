@@ -15,10 +15,10 @@
         </div>
 
         <div class="page-header-right ms-auto d-flex gap-2">
-            <a href="{{ route('blood-groups.deleted') }}" class="btn btn-neutral">
+            <a href="{{ route('admin.blood-groups.deleted') }}" class="btn btn-neutral">
                   Deleted Records
             </a>
-            <a href="{{ route('blood-groups.create') }}" class="btn btn-neutral">Add Blood Group</a>
+            <a href="{{ route('admin.blood-groups.create') }}" class="btn btn-neutral">Add Blood Group</a>
         </div>
     </div>
 
@@ -53,14 +53,14 @@
                                                 <div class="hstack gap-2 justify-content-end">
 
                                                     <!-- Edit -->
-                                                    <a href="{{ route('blood-groups.edit', $bg->id) }}"
+                                                    <a href="{{ route('admin.blood-groups.edit', $bg->id) }}"
                                                     class="avatar-text avatar-md action-icon action-edit"
                                                     title="Edit">
                                                         <i class="feather-edit"></i>
                                                     </a>
 
                                                     <!-- Delete -->
-                                                    <form action="{{ route('blood-groups.destroy', $bg->id) }}"
+                                                    <form action="{{ route('admin.blood-groups.destroy', $bg->id) }}"
                                                         method="POST"
                                                         class="d-inline"
                                                         onsubmit="return confirm('Are you sure you want to delete this blood group?');">

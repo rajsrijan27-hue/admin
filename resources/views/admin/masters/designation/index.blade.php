@@ -17,11 +17,11 @@
             </div>
 
             <div class="page-header-right ms-auto d-flex gap-2">
-                <a href="{{ route('designation.trash') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.designation.trash') }}" class="btn btn-neutral">
                     Deleted Records
                 </a>
 
-                <a href="{{ route('designation.create') }}" class="btn btn-neutral">
+                <a href="{{ route('admin.designation.create') }}" class="btn btn-neutral">
                     Add Designation
                 </a>
             </div>
@@ -71,12 +71,12 @@
 
                                                 <td class="text-end">
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('designation.edit', $designation->id) }}"
+                                                        <a href="{{ route('admin.designation.edit', $designation->id) }}"
                                                             class="avatar-text avatar-md action-icon action-edit">
                                                             <i class="feather-edit"></i>
                                                         </a>
 
-                                                        <form action="{{ route('designation.delete', $designation->id) }}"
+                                                        <form action="{{ route('admin.designation.delete', $designation->id) }}"
                                                             method="POST" class="d-inline"
                                                             onsubmit="return confirm('Are you sure you want to delete this designation?');">
                                                             @csrf
