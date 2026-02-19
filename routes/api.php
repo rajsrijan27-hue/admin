@@ -76,3 +76,28 @@ Route::delete('blood-groups/{id}/force-delete', [BloodGroupController::class, 'a
 Route::get('departments/deleted', [DepartmentController::class, 'apiDeleted']);
 Route::put('departments/{id}/restore', [DepartmentController::class, 'apiRestore']);
 Route::delete('departments/{id}/force-delete', [DepartmentController::class, 'apiForceDelete']);
+
+
+
+
+/* ============================================
+   Financial Year APIs
+============================================ */
+
+use App\Http\Controllers\Admin\FinancialYearApiController;
+use App\Http\Controllers\Admin\FinancialYearMappingApiController;
+
+Route::prefix('admin')->group(function () {
+
+    // Financial Years
+    Route::get('/financial-years', [FinancialYearApiController::class, 'index']);
+    Route::post('/financial-years', [FinancialYearApiController::class, 'store']);
+    Route::put('/financial-years/{financial_year}', [FinancialYearApiController::class, 'update']);
+    Route::delete('/financial-years/{financial_year}', [FinancialYearApiController::class, 'destroy']);
+    Route::post('/financial-years/{financial_year}/toggle', [FinancialYearApiController::class, 'toggleStatus']);
+
+    // Financial Year Mapping
+    Route::get('/financial-year-mapping', [FinancialYearMappingApiController::class, 'index']);
+    Route::post('/financial-year-mapping', [FinancialYearMappingApiController::class, 'store']);
+
+});

@@ -32,6 +32,7 @@ class FinancialYearController extends Controller
             ->withQueryString();
 
         return view('admin.financial-years.index', compact('financialYears'));
+        
     }
 
     /**
