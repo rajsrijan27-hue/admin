@@ -67,4 +67,18 @@ class FinancialYearApiController extends Controller
             'message' => 'Financial year deleted successfully.'
         ]);
     }
+    public function toggleStatus(FinancialYear $financial_year)
+{
+    $financial_year->is_active = !$financial_year->is_active;
+    $financial_year->save();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Financial year status updated successfully.',
+        'data' => [
+            'id' => $financial_year->id,
+            'is_active' => (bool) $financial_year->is_active,
+        ]
+    ]);
+}
 }
